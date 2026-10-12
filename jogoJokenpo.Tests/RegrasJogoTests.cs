@@ -8,7 +8,7 @@ public class RegrasJogoTests
     [InlineData(PecasJogo.Tesoura)]
     public void Jogadas_iguais_retornam_Empate(PecasJogo peca)
     {
-        Assert.Equal(OpcoesPlacar.Empate, RegrasJogo.ValidarJogoMaquinaVenceu(peca, peca));
+        Assert.Equal(OpcoesPlacar.Empate, RegrasJogo.CalcularResultado(peca, peca));
     }
 
     [Theory]
@@ -17,7 +17,7 @@ public class RegrasJogoTests
     [InlineData(PecasJogo.Papel, PecasJogo.Pedra)]
     public void Usuario_com_jogada_vencedora_retorna_Vitoria(PecasJogo usuario, PecasJogo maquina)
     {
-        Assert.Equal(OpcoesPlacar.Vitoria, RegrasJogo.ValidarJogoMaquinaVenceu(usuario, maquina));
+        Assert.Equal(OpcoesPlacar.Vitoria, RegrasJogo.CalcularResultado(usuario, maquina));
     }
 
     [Theory]
@@ -26,6 +26,14 @@ public class RegrasJogoTests
     [InlineData(PecasJogo.Pedra, PecasJogo.Papel)]
     public void Usuario_com_jogada_perdedora_retorna_Derrota(PecasJogo usuario, PecasJogo maquina)
     {
-        Assert.Equal(OpcoesPlacar.Derrota, RegrasJogo.ValidarJogoMaquinaVenceu(usuario, maquina));
+        Assert.Equal(OpcoesPlacar.Derrota, RegrasJogo.CalcularResultado(usuario, maquina));
+    }
+
+    [Theory]
+    [InlineData((PecasJogo)5, PecasJogo.Pedra)]
+    [InlineData(PecasJogo.Pedra, (PecasJogo)(-1))]
+    public void Jogada_fora_do_enum_lanca_excecao(PecasJogo usuario, PecasJogo maquina)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => RegrasJogo.CalcularResultado(usuario, maquina));
     }
 }

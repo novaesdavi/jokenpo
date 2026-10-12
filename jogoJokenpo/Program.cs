@@ -1,8 +1,10 @@
 ﻿
 public static class Program
 {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
         IniciarJogo();
 
 
@@ -14,23 +16,23 @@ public static class Program
         {
             Console.WriteLine("Escolha entre: 0(Pedra), 1(Papel) ou 2(Tesoura) ou pressione q para sair!");
 
-            string? escolhaUsuario = Console.ReadLine();
+            string? escolhaUsuario = Console.ReadLine()?.Trim();
             int escolhaConsole = -1;
 
-            if (escolhaUsuario == "q")
+            if (escolhaUsuario is null || string.Equals(escolhaUsuario, "q", StringComparison.OrdinalIgnoreCase))
             {
                 jogoEmAndamento = false;
                 continue;
             }
             else if (!int.TryParse(escolhaUsuario, out escolhaConsole) || escolhaConsole < 0 || escolhaConsole > 2)
             {
-                Console.WriteLine("Opção inválida!");
+                Console.Error.WriteLine("Opção inválida!");
                 continue;
             }
 
-            int opcaoMaquina = new Random().Next(0, 2);
+            int opcaoMaquina = Random.Shared.Next(Enum.GetValues<PecasJogo>().Length);
 
-            OpcoesPlacar resultado = RegrasJogo.ValidarJogoMaquinaVenceu((PecasJogo)escolhaConsole, (PecasJogo)opcaoMaquina);
+            OpcoesPlacar resultado = RegrasJogo.CalcularResultado((PecasJogo)escolhaConsole, (PecasJogo)opcaoMaquina);
 
             switch (resultado)
             {
@@ -53,12 +55,16 @@ public static class Program
         }
 
         Console.WriteLine("Obrigado por jogar!");
+        return 0;
 
     }
 
     private static void IniciarJogo()
     {
         Console.WriteLine("Iniciando o jogo de Jokenpo...");
+        if (Console.IsInputRedirected)
+            return;
+
         Console.WriteLine("Pressione qualquer tecla para continuar...");
         Console.ReadKey();
     }
@@ -80,23 +86,22 @@ public enum OpcoesPlacar
 
 public static class RegrasJogo
 {
-    public static OpcoesPlacar ValidarJogoMaquinaVenceu(PecasJogo usuario, PecasJogo maquina)
+    public static OpcoesPlacar CalcularResultado(PecasJogo usuario, PecasJogo maquina)
     {
+        if (!Enum.IsDefined(usuario))
+            throw new ArgumentOutOfRangeException(nameof(usuario), usuario, "Jogada inválida.");
+        if (!Enum.IsDefined(maquina))
+            throw new ArgumentOutOfRangeException(nameof(maquina), maquina, "Jogada inválida.");
 
         if (usuario == maquina)
             return OpcoesPlacar.Empate;
 
-        if (usuario == PecasJogo.Pedra && maquina == PecasJogo.Tesoura)
-            return OpcoesPlacar.Vitoria;
-
-        if (usuario == PecasJogo.Pedra && maquina == PecasJogo.Papel)
-            return OpcoesPlacar.Derrota;
-
-        if (usuario == PecasJogo.Tesoura && maquina == PecasJogo.Papel)
-            return OpcoesPlacar.Vitoria;
-
-        return OpcoesPlacar.Derrota;
-
-
+        return (usuario, maquina) switch
+        {
+            (PecasJogo.Pedra, PecasJogo.Tesoura) => OpcoesPlacar.Vitoria,
+            (PecasJogo.Tesoura, PecasJogo.Papel) => OpcoesPlacar.Vitoria,
+            (PecasJogo.Papel, PecasJogo.Pedra) => OpcoesPlacar.Vitoria,
+            _ => OpcoesPlacar.Derrota
+        };
     }
 }

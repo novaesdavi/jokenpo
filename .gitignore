@@ -61,3 +61,4 @@ nunit-*.xml
 
 # Claude Code (pessoal)
 CLAUDE.local.md
+.claude/.last-reviewed-diff

@@ -135,10 +135,10 @@ Hoje o projeto não tem testes. O subagente testador precisa de um lugar para es
     ```
   - ✅ Critério: frontmatter válido, ferramentas sem `Edit`/`Write`, checklist e formato de saída definidos.
 
-- [ ] **4.2** Faça uma alteração pequena qualquer em `Program.cs` (sem commitar) e invoque: *"use o code-reviewer para revisar minhas alterações"*.
+- [x] **4.2** Faça uma alteração pequena qualquer em `Program.cs` (sem commitar) e invoque: *"use o code-reviewer para revisar minhas alterações"*.
   - ✅ Critério: relatório no formato definido, citando arquivo:linha.
 
-- [ ] **4.3** Commit de `.claude/agents/` para o time receber os agentes ao dar `git pull`.
+- [x] **4.3** Commit de `.claude/agents/` para o time receber os agentes ao dar `git pull`.
   - ✅ Critério: `git ls-files .claude/agents` lista os dois arquivos.
 
 ---
@@ -149,7 +149,7 @@ Requisito do projeto: **toda conclusão de alteração de código dispara o code
 
 ### Camada 1 — Regra no CLAUDE.md (pedido)
 
-- [ ] **5.1** Preencha a seção **Fluxo de trabalho** do `CLAUDE.md`, por exemplo:
+- [x] **5.1** Preencha a seção **Fluxo de trabalho** do `CLAUDE.md`, por exemplo:
   ```markdown
   ## Fluxo de trabalho (obrigatório)
   Ao concluir qualquer alteração em código (.cs/.csproj):
@@ -164,7 +164,7 @@ Requisito do projeto: **toda conclusão de alteração de código dispara o code
 
 O evento `Stop` roda quando o Claude termina de responder. Se o hook devolver `"decision": "block"`, o Claude **não pode parar** e recebe o `reason` como instrução.
 
-- [ ] **5.2** Crie `.claude/hooks/review-gate.sh`:
+- [x] **5.2** Crie `.claude/hooks/review-gate.sh`:
   ```bash
   #!/usr/bin/env bash
   # Bloqueia o fim da resposta se há código alterado ainda não revisado.
@@ -189,7 +189,7 @@ O evento `Stop` roda quando o Claude termina de responder. Se o hook devolver `"
   - ✅ Critério: script existe e o marcador está ignorado pelo git.
   - 🧠 Entenda: por que precisamos de `stop_hook_active` **e** do hash? (me responda no chat)
 
-- [ ] **5.3** Registre o hook em `.claude/settings.json` (compartilhado com o time):
+- [x] **5.3** Registre o hook em `.claude/settings.json` (compartilhado com o time):
   ```json
   {
     "hooks": {
