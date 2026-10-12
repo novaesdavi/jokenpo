@@ -206,17 +206,17 @@ O evento `Stop` roda quando o Claude termina de responder. Se o hook devolver `"
   Depois rode `/hooks` no Claude Code para confirmar que ele aparece.
   - ✅ Critério: `/hooks` mostra o hook `Stop`.
 
-- [ ] **5.4** Teste de ponta a ponta: peça *"corrija os bugs que o testador encontrou"*.
+- [x] **5.4** Teste de ponta a ponta: peça *"corrija os bugs que o testador encontrou"*.
   - ✅ Critério: sem você pedir, o Claude roda testador → code-reviewer → corrige críticos → reporta. Todos os testes passam.
 
 ---
 
 ## Módulo 6 — Validação final e entrega para o time
 
-- [ ] **6.1** Commit de `CLAUDE.md`, `.claude/agents/`, `.claude/hooks/`, `.claude/settings.json`, `.gitignore` e das correções.
+- [x] **6.1** Commit de `CLAUDE.md`, `.claude/agents/`, `.claude/hooks/`, `.claude/settings.json`, `.gitignore` e das correções.
   - ✅ Critério: `git status` limpo.
 
-- [ ] **6.2** Atualize o `README.md` com uma seção "Desenvolvendo com Claude Code" explicando ao time: os agentes disponíveis, o fluxo obrigatório de review e como invocar o reviewer manualmente.
+- [x] **6.2** Atualize o `README.md` com uma seção "Desenvolvendo com Claude Code" explicando ao time: os agentes disponíveis, o fluxo obrigatório de review e como invocar o reviewer manualmente.
   - ✅ Critério: README atualizado.
 
 - [ ] **6.3** Reflexão final (no chat): o que você mudaria no prompt do code-reviewer depois de vê-lo funcionando?
